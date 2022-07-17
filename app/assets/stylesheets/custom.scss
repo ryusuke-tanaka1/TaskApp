@@ -57,15 +57,43 @@ p {
   margin-right: 10px;
   font-size: 1.7em;
   color: #fff;
-  text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  font-style: italic;
 }
 
+
+/* カーソルを上にもっていったとき（ホバー時）*/
 #logo:hover {
-  color: #fff;
+  color: gray;
   text-decoration: none;
+}
+
+#header {
+  background-color: teal;
+}
+
+#header-list {
+  font-weight: bold;
+}
+
+#header-char {
+  color: #fff;
+  background-color: teal;
+}
+
+#header-char:hover {
+  color: gray; 
+}
+
+/* トップページ */
+#top-main {
+  background-color: transparent;
+}
+
+#top-main-title {
+  font-style: italic;
 }
 
 /* デバッグウインドウ */
