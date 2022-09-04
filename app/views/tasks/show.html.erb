@@ -16,15 +16,15 @@
           </tr>
           <tr>
             <th class="active">詳細</th>
-            <td><%= @task.note %></td>
+            <td><%= text_url_to_link(h(@task.note)).html_safe %></td>
           </tr>  
           <tr>
             <th class="active">作成日</th>
-            <td><%= @task.created_at %></td>
+            <td><%= l(@task.created_at, format: :long) %></td>
           </tr>
           <tr>
             <th class="active">更新日</th>
-            <td><%= @task.updated_at %></td>
+            <td><%= l(@task.updated_at, format: :long) %></td>
           </tr>
         </tbody>
       </table>
