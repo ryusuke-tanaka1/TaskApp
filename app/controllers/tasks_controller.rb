@@ -1,4 +1,9 @@
 class TasksController < ApplicationController
+  before_action :set_user, only: [:index, :new, :create, :edit, :update, :show, :destroy]
+  before_action :logged_in_user, only: [:index, :new, :create, :edit, :update, :show, :destroy]
+  before_action :correct_user, only: [:index, :new, :create, :edit, :update, :show, :destroy]
+  
+  
   def index
     @user = User.find(params[:user_id])
     @tasks = @user.tasks #ユーザーのタスクが全部入ってる
@@ -52,5 +57,8 @@ class TasksController < ApplicationController
   private
     def task_params
       params.require(:task).permit(:name, :note, :user_id)
+    end
+    def set_user
+      @user = User.find(params[:user_id])
     end
 end

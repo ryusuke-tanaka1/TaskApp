@@ -1,7 +1,12 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :edit, :update, :index, :destroy]
+  before_action :admin_user, only: :index
+  before_action :correct_user, only: [:edit, :update]
+  before_action :correct_or_admin_user, only: :show
+  
   
   def show
-    @user = User.find(params[:id])
   end
 
   def new
@@ -20,11 +25,9 @@ class UsersController < ApplicationController
   end
   
   def edit
-    @user = User.find(params[:id])
   end
   
   def update
-    @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "更新しました。"
       redirect_to @user # 自動でユーザーのshowに飛んでくれる
@@ -38,7 +41,6 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     flash[:success] = "削除しました。"
     redirect_to users_url
@@ -48,5 +50,23 @@ class UsersController < ApplicationController
   
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+    
+    def set_user
+      @user = User.find(params[:id])
+    end
+    
+    def admin_user
+      unless current_user.admin?
+        flash[:danger] = "管理者ではありません。"
+        redirect_to root_url
+      end
+    end
+    
+    def correct_or_admin_user
+      unless current_user?(@user) || current_user.admin?
+        flash[:danger] = "権限がありません。"
+        redirect_to root_url
+      end
     end
 end
