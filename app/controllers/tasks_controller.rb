@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   
   def index
     @user = User.find(params[:user_id])
-    @tasks = @user.tasks #ユーザーのタスクが全部入ってる
+    @tasks = @user.tasks.order(created_at: "DESC") #ユーザーのタスクが全部入ってる
   end
   
   def new

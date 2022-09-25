@@ -10,7 +10,12 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if logged_in?
+      flash[:danger] = "ログインしています。"
+      redirect_to user_url(current_user)
+    else
+      @user = User.new
+    end
   end
   
   def create
@@ -37,7 +42,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page], per_page: 20)
   end
   
   def destroy
